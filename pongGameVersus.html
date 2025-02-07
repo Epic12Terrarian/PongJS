@@ -1,0 +1,108 @@
+<html>
+<head>
+<title> gearBounce </title>
+<script src="https://simplycodingcourses.com/files/simply.js"></script>
+<script>
+function start(){
+sjs.open("target",500,400);
+
+var mainMenu = new sjs.Button("Main Menu", function(){
+window.location = "mainMenu.html";
+});
+mainMenu.center().offset(0, 30);
+mainMenu.hide();
+
+var pop = new Audio('sound/pop.mp3');
+var plrScore = " ";
+
+var plrScoreTXT = new sjs.Text(plrScore, 20, "cyan");
+plrScoreTXT.center().offset(-55, -10);
+
+var comLostDetector = new sjs.Image();
+comLostDetector.setSize(500,1);
+comLostDetector.top();
+comLostDetector.type = "topDetect";
+
+var plrLostDetector = new sjs.Image();
+plrLostDetector.setSize(500,1);
+plrLostDetector.bottom();
+plrLostDetector.type = "lowDetect";
+
+var playerPaddle = new sjs.Image("Images/p1.png");
+playerPaddle.setSize(120, 50);
+playerPaddle.center();
+playerPaddle.bottom();
+playerPaddle.type = "paddle";
+
+var comPaddle = new sjs.Image("Images/p2.png");
+comPaddle.setSize(120, 50);
+comPaddle.center();
+comPaddle.top();
+comPaddle.type = "paddle";
+
+var gear = new sjs.Image("Images/gear.png");
+gear.setSize(50, 50);
+gear.center();
+gear.friction = -0.001;
+gear.pushDown(5);
+gear.pushLeft(2);
+gear.type = "gear";
+
+sjs.onHit("gear", "topDetect", function(gear,topDetect) {
+gear.destroy();
+playerPaddle.destroy();
+comPaddle.destroy();
+plrScore = "Player 1 Wins";
+mainMenu.show();
+plrScoreTXT.setText(plrScore);
+pop.play();
+});
+sjs.onHit("gear", "lowDetect", function(gear,lowDetect) {
+gear.destroy();
+playerPaddle.destroy();
+comPaddle.destroy();
+plrScore = "Player 2 Wins";
+mainMenu.show();
+plrScoreTXT.setText(plrScore);
+pop.play();
+});
+sjs.onHit("gear", "paddle", function(gear,paddle){
+sjs.bounceOff(gear,paddle);
+pop.play();
+});
+gear.bounce();
+
+
+
+sjs.keyDown(LEFT_KEY, function(){
+playerPaddle.friction = 0;
+playerPaddle.pushLeft(10);
+playerPaddle.friction = 1;
+});
+sjs.keyDown(RIGHT_KEY, function(){
+playerPaddle.friction = 0;
+playerPaddle.pushRight(10);
+playerPaddle.friction = 1;
+});
+
+sjs.keyDown(A_KEY, function(){
+comPaddle.friction = 0;
+comPaddle.pushLeft(10);
+comPaddle.friction = 1;
+});
+sjs.keyDown(D_KEY, function(){
+comPaddle.friction = 0;
+comPaddle.pushRight(10);
+comPaddle.friction = 1;
+});
+} //end start
+
+
+</script>
+</head>
+<body onload="start()">
+<h1> gearBounce </h1>
+
+<div id="target" style="margin:auto;background:black;"></div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<html>
+ <head>
+  <title> Menu </title> 
+  <script src="https://simplycodingcourses.com/files/simplyjs/simply.js"> </script>  
+  <script>  
+   function start(){
+sjs.open("target",500,400);
+var menu = new sjs.Text("Do you want to be able to lose?", 15, "blue");
+menu.center().top().offset(0, 70);
+
+var backButton = new sjs.Button("Back", function(){
+window.location = "mainMenu.html";
+});
+
+var startVersus = new sjs.Button("Yes", function(){
+window.location = "pongGameButYouCanLose.html";
+});
+startVersus.center().left().offset(140, 0);
+
+
+var startVersus = new sjs.Button("No", function(){
+window.location = "pongGame.html";
+});
+startVersus.center().right().offset(-140, 0);
+
+}
+</script>  
+</head>  
+<body onload="start()">
+<div id="target" style="margin:auto;background:gray;"></div>
+</body>
+</html>

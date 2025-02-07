@@ -1,0 +1,94 @@
+<html>
+<head>
+<title> gearBounce </title>
+<script src="https://simplycodingcourses.com/files/simply.js"></script>
+<script>
+function start(){
+sjs.open("target",500,400);
+
+var pop = new Audio('sound/pop.mp3'); //play(), pause(), or stop() to control
+var plrScore = 0;
+
+var plrScoreTXT = new sjs.Text("Score: " + plrScore, 20, "cyan");
+//plrScoreTXT.center();
+
+var comLostDetector = new sjs.Image();
+comLostDetector.setSize(500,1);
+comLostDetector.top();
+comLostDetector.type = "topDetect";
+
+var plrLostDetector = new sjs.Image();
+plrLostDetector.setSize(500,1);
+plrLostDetector.bottom();
+plrLostDetector.type = "lowDetect";
+
+var playerPaddle = new sjs.Image("Images/p1.png");
+playerPaddle.setSize(120, 50);
+playerPaddle.center();
+playerPaddle.bottom();
+playerPaddle.type = "paddle";
+
+var comPaddle = new sjs.Image("Images/p2.png");
+comPaddle.setSize(120, 50);
+comPaddle.center();
+comPaddle.top();
+comPaddle.type = "paddle";
+
+var gear = new sjs.Image("Images/gear.png");
+gear.setSize(50, 50);
+gear.center();
+gear.friction = 0;
+gear.pushDown(7);
+gear.pushLeft(3);
+gear.type = "gear";
+
+/*sjs.onHit("gear", "topDetect", function(gear,topDetect) {
+gear.destroy();
+plrScore = "Player 1 Wins";
+plrScoreTXT.setText(plrScore);
+});
+sjs.onHit("gear", "lowDetect", function(gear,lowDetect) {
+gear.destroy();
+plrScore = "Player 2 Wins";
+plrScoreTXT.setText(plrScore);
+});*/
+
+sjs.onHit("gear", "paddle", function(gear,paddle){
+sjs.bounceOff(gear,paddle);
+pop.play();
+plrScore += 1;
+plrScoreTXT.setText("Score: " + plrScore);
+});
+gear.bounce();
+
+
+
+sjs.keyDown(LEFT_KEY, function(){
+playerPaddle.friction = 0;
+playerPaddle.pushLeft(10);
+playerPaddle.friction = 1;
+comPaddle.friction = 0;
+comPaddle.pushLeft(10);
+comPaddle.friction = 1;
+});
+sjs.keyDown(RIGHT_KEY, function(){
+playerPaddle.friction = 0;
+playerPaddle.pushRight(10);
+playerPaddle.friction = 1;
+comPaddle.friction = 0;
+comPaddle.pushRight(10);
+comPaddle.friction = 1;
+});
+
+
+} //end start
+
+
+</script>
+</head>
+<body onload="start()">
+<h1> gearBounce </h1>
+
+<div id="target" style="margin:auto;background:black;"></div>
+</body>
+</html>

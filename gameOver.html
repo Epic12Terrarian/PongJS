@@ -1,0 +1,24 @@
+<html>
+ <head>
+  <title> Menu </title> 
+  <script src="https://simplycodingcourses.com/files/simplyjs/simply.js"> </script>  
+  <script>  
+   function start(){
+sjs.open("target",500,400);
+var menu = new sjs.Text("Game Over", 50, "red");
+menu.center().top().offset(0, 70);
+
+var mainMenu = new sjs.Button("Main Menu", function(){
+window.location = "mainMenu.html";
+});
+mainMenu.center().offset(0, 30);
+
+
+
+}
+</script>  
+</head>  
+<body onload="start()">
+<div id="target" style="margin:auto;background:black;"></div>
+</body>
+</html>
